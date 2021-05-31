@@ -22,6 +22,6 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('products/', include('mainapp.urls')),
-    path('', views.index),
-    path('contacts/', views.contact),
+    path('', views.index, name='index'),
+    path('contacts/', views.contact, name='contacts'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
