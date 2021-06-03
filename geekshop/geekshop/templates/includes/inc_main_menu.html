@@ -3,8 +3,8 @@
     <ul class="menu">
         <li><a href="{% url 'index' %}"
                {% if request.resolver_match.view_name == 'index' %}class="active"{% endif %}>домой</a></li>
-        <li><a href="{% url 'mainapp:products' %}"
-               {% if request.resolver_match.view_name == 'mainapp:products' %}class="active"{% endif %}>продукты</a></li>
+        <li><a href="{% url 'products:index' %}"
+               {% if request.resolver_match.view_name == 'products:index' %}class="active"{% endif %}>продукты</a></li>
         <li><a href="{% url 'contacts' %}"
                {% if request.resolver_match.view_name == 'contacts' %}class="active"{% endif %}>контакты</a></li>
     </ul>

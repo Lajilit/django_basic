@@ -30,14 +30,15 @@
     <div class="clearfix">
     </div>
     <div class="tab-content">
-        {% for product in some_products %}
+        {% for product in products %}
         <div class="block">
-            <a href="{{product.href}}"><img src="{% static product.img %}"
-                                            alt="">
+            <a href="#"><img class="img_block" src="/media/{{ product.image }}"
+                                            alt="{{ product.short_desc }}">
                 <div class="text">
-                    <img src="{% static '/img/icon-hover.png' %}" alt="img">
-                    <h4>Стул повышенного качества</h4>
-                    <p>Не оторваться. </p>
+                    <img src="{% static '/img/icon-hover.png' %}"
+                         alt="product.short_desc">
+                    <h4>{{ product.name }}</h4>
+                    <p>{{ product.short_desc }}</p>
                 </div>
             </a>
         </div>

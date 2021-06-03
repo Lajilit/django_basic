@@ -1,19 +1,14 @@
 from django.shortcuts import render
-
-
+from mainapp.models import Product
 # Create your views here.
 
 def index(request):
     title = 'магазин'
-    some_products = [
-        {'href': 'index', 'img': '/img/product-1.jpg'},
-        {'href': 'index', 'img': '/img/product-2.jpg'},
-        {'href': 'index', 'img': '/img/product-3.jpg'},
-        {'href': 'index', 'img': '/img/product-4.jpg'},
-    ]
+    products = Product.objects.all()[:4]
+
     data = {
         'title': title,
-        'some_products': some_products,
+        'products': products,
     }
     return render(request, 'index.html', context=data)
 

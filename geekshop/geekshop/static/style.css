@@ -267,6 +267,12 @@ html, body {
 	width: 270px;
 	position: relative;
 }
+
+.img_block {
+	height: 270px;
+	width: 270px;
+}
+
 .tab-content a .text {
 	display: none;
 	height: 268px;
@@ -1035,6 +1041,10 @@ td:first-child {
 	height: 370px;
 	width: 370px;
 	position: relative;
+}
+.related_block {
+	height: 370px;
+	width: 370px;
 }
 .related-products .block:nth-child(3n) {
 	margin-right: 0px;
