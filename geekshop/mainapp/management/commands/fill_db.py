@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 from mainapp.models import ProductCategory, Product
-from django.contrib.auth.models import User
+from authapp.models import ShopUser
 
 import json
 import os
@@ -36,5 +36,5 @@ class Command(BaseCommand):
             new_product.save()
 
         # Создаем суперпользователя при помощи менеджера модели
-        User.objects.create_superuser('lajil', 'lajilit@gmail.com',
-                                                   '123qwe!ewq')
+        ShopUser.objects.create_superuser('lajil', 'lajilit@gmail.com',
+                                                   '123qwe!ewq', age=30)

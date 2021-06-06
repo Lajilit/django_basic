@@ -24,6 +24,7 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('products/', include('mainapp.urls', namespace='products')),
+    path('auth/', include('authapp.urls', namespace='auth')),
     path('', views.index, name='index'),
     path('contacts/', views.contact, name='contacts'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
