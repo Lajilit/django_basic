@@ -47,8 +47,8 @@
             <h3 class="big-bold">{{ main_product.name }}</h3>
             <h3 class="red">горячее предложение</h3>
             <p class="price"> {{ main_product.price }} <span>руб</span></p>
-            <a href="#" class="red-button">
-                заказать <i class="fa fa-chevron-right" aria-hidden="true"></i>
+            <a href="{% url 'basket:add' main_product.pk %}" class="red-button">
+                заказать</i>
             </a>
             <div class="description-text">
                 <p>{{ main_product.description }}</p>
@@ -77,6 +77,9 @@
                         <h4>{{ product.name }}</h4>
                         <p>{{ product.description }}</p>
                     </div>
+                </a>
+                <a href="{% url 'basket:add' product.pk %}" class="red-button">
+                    заказать
                 </a>
             </div>
             {% endfor %}

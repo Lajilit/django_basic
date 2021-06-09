@@ -32,10 +32,12 @@
               <img class="img_block" src="/media/{{ product.image }}"
                    alt="product">
               <div class="text">
-                <img src="{% static 'img/icon-hover.png' %}" alt="hover">
                   <h4>{{ product.name }}</h4>
                   <p>{{ product.description }}</p>
               </div>
+            </a>
+            <a href="{% url 'basket:add' product.pk %}" class="red-button">
+                заказать
             </a>
           </div>
         {% endfor %}

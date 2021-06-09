@@ -28,6 +28,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('<int:pk>', views.index, name='index'),
     path('contacts/', views.contact, name='contacts'),
+    path('basket/', include('basketapp.urls', namespace='basket')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:
