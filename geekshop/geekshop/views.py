@@ -2,9 +2,14 @@ from django.shortcuts import render
 from mainapp.models import Product
 # Create your views here.
 
-def index(request):
+
+def index(request, pk=None):
     title = 'магазин'
     products = Product.objects.all()[:4]
+    if pk == 0:
+         products = Product.objects.all().order_by('price')[:4]
+    elif pk == 1:
+        products = Product.objects.all().order_by('name')[:4]
 
     data = {
         'title': title,

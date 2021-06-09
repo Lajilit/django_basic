@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+{% block title %}{{ title|capfirst }}{% endblock %}
+{% block style %}
+<!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" integrity="undefined" crossorigin="anonymous">-->
+{% endblock %}
+{% block content %}
+{% load static %}
+
+
+  <div class="hero-white">
+    <div class="header clearfix">
+      {% include 'includes/inc_main_menu.html' %}
+    </div>
+  </div>
+
+
+  <div class="details">
+    <div class="links clearfix">
+      {% include 'includes/inc_categories_menu.html' %}
+    </div>
+
+    <div class="products_list">
+      <div class="title clearfix">
+        <h2>
+          Категория: "{{ category.name|title }}"
+        </h2>
+      </div>
+      <div class="category-products clearfix">
+
+        {% for product in products %}
+          <div class="block">
+            <a href="{% url 'products:product' product.pk %}">
+              <img src="/media/{{ product.image }}" alt="product">
+              <div class="text">
+                <img src="{% static 'img/icon-hover.png' %}" alt="hover">
+                  <h4>{{ product.name }}</h4>
+                  <p>{{ product.description }}</p>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+
+      </div>
+    </div>
+  </div>
+
+  <div class="clr"></div>
+
+{% endblock %}
+

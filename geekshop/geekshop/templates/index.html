@@ -18,21 +18,23 @@
 <div class="featured">
     <div class="featured-menu">
         <!--здесь условия в дальнейшем нужно изменить-->
-        <a href="#"
-            {% if link.href != link.href %}class="active"{% endif %}>
-            Популярные</a>
-        <a href="#"
-            {% if link.href != link.href %}class="active"{% endif %}>
-            Новинки</a>
+        <a href="{% url 'index' 0 %}"
+           {% if request.resolver_match.kwargs.pk == 0 %}
+           class="active"
+           {% endif %}>Популярные</a>
+        <a href="{% url 'index' 1 %}"
+            {% if request.resolver_match.kwargs.pk == 1 %}
+           class="active"
+            {% endif %}>Новинки</a>
     </div>
-    <a class="explore" href="#">показать все <img
+    <a class="explore" href="{% url 'products:index' 0 %}">показать все <img
             src="{% static 'img/arrow.png' %}" alt=""></a>
     <div class="clearfix">
     </div>
     <div class="tab-content">
         {% for product in products %}
         <div class="block">
-            <a href="#"><img class="img_block" src="/media/{{ product.image }}"
+            <a href="{% url 'products:product' product.pk %}"><img class="img_block" src="/media/{{ product.image }}"
                                             alt="{{ product.short_desc }}">
                 <div class="text">
                     <img src="{% static '/img/icon-hover.png' %}"
