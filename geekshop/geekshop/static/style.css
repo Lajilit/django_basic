@@ -550,7 +550,7 @@ html, body {
 
 .footer {
 	height: 384px;
-	width: 1169px;
+	width: 1366px;
 	background-color: #f7f7f7;
 	padding-left: 99px;
 	padding-right: 98px;
@@ -1080,4 +1080,21 @@ td:first-child {
 }
 .related-products a:hover .text{
 	display: block;
+}
+
+.category-products {
+    display: flex;
+    flex-wrap: wrap
+}
+.category-products .block{
+    display: block;
+    width: 25%;
+}
+
+.products_list {
+    display:flex;
+    flex-direction: column;
+}
+.products_list .title{
+    margin-bottom: 70px;
 }
