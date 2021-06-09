@@ -41,8 +41,6 @@ def products(request, pk=None):
     return render(request, 'mainapp/products_list.html', content)
 
 
-
-
 def product(request, pk=None):
 
     title = 'продукты'
@@ -52,7 +50,8 @@ def product(request, pk=None):
     if pk:
         main_product = Product.objects.get(pk=pk)
 
-    same_products = Product.objects.exclude(pk=main_product.pk)[0:3]
+    same_products = Product.objects.exclude(
+        pk=main_product.pk).filter(category__pk=main_product.category.pk)[:3]
 
     content = {
         'title': title,

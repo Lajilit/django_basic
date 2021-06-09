@@ -9,7 +9,7 @@
 
 <div class="details">
     <div class="links clearfix">
-            {% include 'includes/inc_categories_menu.html' %}
+        {% include 'includes/inc_categories_menu.html' %}
     </div>
 
     <div class="details-products">
@@ -18,29 +18,29 @@
                 <img src="/media/{{ main_product.image }}">
             </div>
 
-<!--Блок с вариантами цветов закомментировала, так как пока не реализовано-->
-<!--            <div class="slider-control">-->
-<!--                <div class="block">-->
-<!--                    <a href="#"><img-->
-<!--                            src="{% static '/img/controll.jpg' %}"-->
-<!--                            alt="">-->
-<!--                        <div class="text"></div>-->
-<!--                    </a>-->
-<!--                </div>-->
-<!--                <div class="block">-->
-<!--                    <a href="#"><img-->
-<!--                            src="{% static '/img/controll1.jpg' %}"-->
-<!--                            alt="">-->
-<!--                        <div class="text"></div>-->
-<!--                    </a>-->
-<!--                </div>-->
-<!--                <div class="block">-->
-<!--                    <a href="#"><img src="{% static '/img/controll2.jpg' %}"-->
-<!--                                     alt="">-->
-<!--                        <div class="text"></div>-->
-<!--                    </a>-->
-<!--                </div>-->
-<!--            </div>-->
+            <!--Блок с вариантами цветов закомментировала, так как пока не реализовано-->
+            <!--            <div class="slider-control">-->
+            <!--                <div class="block">-->
+            <!--                    <a href="#"><img-->
+            <!--                            src="{% static '/img/controll.jpg' %}"-->
+            <!--                            alt="">-->
+            <!--                        <div class="text"></div>-->
+            <!--                    </a>-->
+            <!--                </div>-->
+            <!--                <div class="block">-->
+            <!--                    <a href="#"><img-->
+            <!--                            src="{% static '/img/controll1.jpg' %}"-->
+            <!--                            alt="">-->
+            <!--                        <div class="text"></div>-->
+            <!--                    </a>-->
+            <!--                </div>-->
+            <!--                <div class="block">-->
+            <!--                    <a href="#"><img src="{% static '/img/controll2.jpg' %}"-->
+            <!--                                     alt="">-->
+            <!--                        <div class="text"></div>-->
+            <!--                    </a>-->
+            <!--                </div>-->
+            <!--            </div>-->
         </div>
 
         <div class="description">
@@ -57,17 +57,21 @@
     </div>
 
     <div class="related">
+
         <div class="title clearfix">
-            <h2>Похожие продукты</h2>
-            <a class="explore" href="#">показать все <img
-                    src="{% static '/img/arrow.png' %}" alt=""></a>
+            <h2>Другие товары категории {{ main_product.category.name }}</h2>
+            <a class="explore"
+               href="{% url 'products:category' main_product.category.pk %}">показать
+                все <img
+                        src="{% static '/img/arrow.png' %}" alt=""></a>
         </div>
         <div class="related-products clearfix">
             {% for product in same_products %}
             <div class="block">
-                <a href="{% url 'products:product' product.pk %}"><img class="related_block"
-                                 src="/media/{{ product.image }}"
-                                                alt="{{ product.short_desc }}">
+                <a href="{% url 'products:product' product.pk %}"><img
+                        class="related_block"
+                        src="/media/{{ product.image }}"
+                        alt="{{ product.short_desc }}">
                     <div class="text">
                         <img src="{% static '/img/icon-hover.png' %}" alt="img">
                         <h4>{{ product.name }}</h4>
@@ -77,6 +81,7 @@
             </div>
             {% endfor %}
         </div>
+
     </div>
 </div>
 
