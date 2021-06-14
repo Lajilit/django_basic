@@ -19,14 +19,13 @@ from django.conf import settings
 from django.conf.urls.static import static
 from . import views
 
-
-
 urlpatterns = [
+    path('', views.index, name='index'),
     path('admin/', admin.site.urls),
+
     path('products/', include('mainapp.urls', namespace='products')),
     path('auth/', include('authapp.urls', namespace='auth')),
-    path('', views.index, name='index'),
-    path('<int:pk>', views.index, name='index'),
+
     path('contacts/', views.contact, name='contacts'),
     path('basket/', include('basketapp.urls', namespace='basket')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -82,12 +82,19 @@ html, body {
 }
 .basket {
 	display: block;
-	width: 23px;
-	height: 23px;	
-	background-image: url(img/basket.png);
+	width: 150px;
+	height: 23px;
+/*	background: no-repeat url(img/basket.png);
+	background-size: 23px;*/
 	position: absolute;
 	top: 63px;
-	left: 1210px;
+	left: 1200px;
+	text-align: right;
+	text-transform: uppercase;
+	text-decoration: none;
+    color: #8c8c8c;
+    padding: 0 10px;
+    vertical-align: bottom;
 }
 
 .clearfix:after {

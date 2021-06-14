@@ -18,16 +18,16 @@
 <div class="featured">
     <div class="featured-menu">
         <!--здесь условия в дальнейшем нужно изменить-->
-        <a href="{% url 'index' 0 %}"
-           {% if request.resolver_match.kwargs.pk == 0 %}
+        <a href="{% url 'index' %}"
+           {% if 0 == 0 %}
            class="active"
            {% endif %}>Популярные</a>
-        <a href="{% url 'index' 1 %}"
-            {% if request.resolver_match.kwargs.pk == 1 %}
+        <a href="{% url 'index' %}"
+            {% if 0 == 1 %}
            class="active"
             {% endif %}>Новинки</a>
     </div>
-    <a class="explore" href="{% url 'products:index' 0 %}">показать все <img
+    <a class="explore" href="{% url 'products:index' %}">показать все <img
             src="{% static 'img/arrow.png' %}" alt=""></a>
     <div class="clearfix">
     </div>

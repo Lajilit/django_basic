@@ -1,61 +1,72 @@
+import random
 from django.shortcuts import render, get_object_or_404
-
 from basketapp.models import Basket
 from .models import ProductCategory, Product
 
-# Create your views here.
+
+def get_basket(user):
+    if user.is_authenticated:
+        return Basket.objects.filter(user=user)
+    else:
+        return []
 
 
-def products(request, pk=None):
+def get_random_product():
+    products = Product.objects.all()
+    return random.sample(list(products), 1)[0]
 
-    title = 'продукты'
-    links_menu = ProductCategory.objects.all()
-    basket = []
-    if request.user.is_authenticated:
-        basket = Basket.objects.filter(user=request.user)
+
+def get_same_products(prod):
+    same_products = Product.objects.filter(category=prod.category). \
+                        exclude(pk=prod.pk)[:3]
+    return same_products
+
+
+def products_list(request, pk):
 
     if pk == 0:
-        products = Product.objects.all().order_by('price')
         category = {'name': 'все'}
+        products = Product.objects.all()
     else:
         category = get_object_or_404(ProductCategory, pk=pk)
-        products = Product.objects.filter(category__pk=pk).order_by('price')
+        products = Product.objects.filter(category__pk=pk)
 
     content = {
-        'title': title,
-        'links_menu': links_menu,
+        'title': 'продукты',
+        'links_menu': ProductCategory.objects.all(),
         'category': category,
         'products': products,
-        'basket': basket,
+        'basket': get_basket(request.user),
     }
-
     return render(request, 'mainapp/products_list.html', content)
 
 
-def product(request, pk=None):
+def hot_product(request):
+    hot_product = get_random_product()
+    same_products = get_same_products(hot_product)
 
-    title = 'продукты'
-    main_product = Product.objects.get(pk=1)
-    links_menu = ProductCategory.objects.all()
-    basket = []
-    if request.user.is_authenticated:
-        basket = Basket.objects.filter(user=request.user)
+    content = {
+        'title': 'горячее предложение',
+        'links_menu': ProductCategory.objects.all(),
+        'hot_product': hot_product,
+        'same_products': same_products,
+        'basket': get_basket(request.user),
+    }
 
-    if pk:
-        main_product = Product.objects.get(pk=pk)
+    return render(request, 'mainapp/hot_product.html', content)
 
-    same_products = Product.objects.exclude(
-        pk=main_product.pk).filter(category__pk=main_product.category.pk)[:3]
+
+def product(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    title = product.name
 
     content = {
         'title': title,
-        'links_menu': links_menu,
-        'main_product': main_product,
-        'same_products': same_products,
-        'basket': basket,
+        'links_menu': ProductCategory.objects.all(),
+        'product': product,
+        'basket': get_basket(request.user),
     }
 
-    return render(request, 'mainapp/products.html', content)
-
+    return render(request, 'mainapp/product.html', content)
 
 

@@ -3,23 +3,15 @@ from django.shortcuts import render
 from basketapp.models import Basket
 from mainapp.models import Product
 # Create your views here.
+from mainapp.views import get_basket
 
 
-def index(request, pk=None):
-    title = 'магазин'
-    products = Product.objects.all()[:4]
-    basket = []
-    if request.user.is_authenticated:
-        basket = Basket.objects.filter(user=request.user)
-    if pk == 0:
-         products = Product.objects.all().order_by('price')[:4]
-    elif pk == 1:
-        products = Product.objects.all().order_by('name')[:4]
+def index(request):
 
     data = {
-        'title': title,
-        'products': products,
-        'basket': basket,
+        'title': 'магазин',
+        'products': Product.objects.all()[:4],
+        'basket': get_basket(request.user),
     }
     return render(request, 'index.html', context=data)
 

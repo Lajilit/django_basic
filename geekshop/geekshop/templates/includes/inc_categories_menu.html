@@ -1,7 +1,7 @@
 <ul class="links-menu">
   <li>
     <a href="{% url 'products:category' 0 %}"
-        {% if request.resolver_match.url_name == 'index' and  request.resolver_match.kwargs.pk == 0 %}
+        {% if request.resolver_match.url_name == 'category' and  request.resolver_match.kwargs.pk == 0 %}
             class="active"
         {% endif %}>
       все
@@ -10,10 +10,13 @@
   {% for link in links_menu %}
     <li>
       <a href="{% url 'products:category' link.pk %}"
-         {% if request.resolver_match.url_name == 'index' and  request.resolver_match.kwargs.pk == link.pk %}
+        {% if request.resolver_match.url_name == 'category' and  request.resolver_match.kwargs.pk == link.pk %}
             class="active"
         {% endif %}
-        {% if request.resolver_match.url_name == 'product' and  link.pk == main_product.category.pk %}
+        {% if request.resolver_match.url_name == 'product' and  link.pk == hot_product.category.pk %}
+            class="active"
+        {% endif %}
+        {% if request.resolver_match.url_name == 'product' and  link.pk == product.category.pk %}
             class="active"
         {% endif %}>
         {{ link.name }}
