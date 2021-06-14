@@ -1183,3 +1183,17 @@ td:first-child {
 .basket_summary {
     font-size: 20px;
 }
+
+.product_quantity {
+	display: block;
+	height: 40px;
+	line-height: 40px;
+	width: 50px;
+	padding: 0;
+	margin: 0 10px 0 0;
+	box-sizing: border-box;
+	text-align: center;
+	-moz-appearance: textfield;
+	-webkit-appearance: textfield;
+	appearance: textfield;
+}

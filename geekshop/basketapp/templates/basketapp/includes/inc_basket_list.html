@@ -5,8 +5,14 @@
         <div class="category_name">{{ item.product.category.name }}</div>
         <div class="product_name">{{ item.product.name }}</div>
         <div class="product_price">{{ item.product.price }}&nbspруб.</div>
-        <input type="number" name="{{ item.pk }}" min="0"
+        <input class="product_quantity" type="number" name="{{ item.pk }}" min="0"
                              value="{{ item.quantity }}">
+<!-- Стилизация стрелочек. добработать
+<div class="number">
+	<button class="number-minus" type="button" onclick="this.nextElementSibling.stepDown(); this.nextElementSibling.onchange();">-</button>
+	<input type="number" min="0" value="1" readonly>
+	<button class="number-plus" type="button" onclick="this.previousElementSibling.stepUp(); this.previousElementSibling.onchange();">+</button>
+</div>-->
         <div class="product_cost">{{ item.product_cost }}&nbspруб.</div>
         <a href="{% url 'basket:remove' item.pk %}" class="x">
             X

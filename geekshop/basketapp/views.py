@@ -5,6 +5,7 @@ from django.template.loader import render_to_string
 from django.http import JsonResponse
 from basketapp.models import Basket
 from mainapp.models import Product
+from mainapp.views import get_basket
 
 
 @login_required
@@ -16,6 +17,8 @@ def basket(request):
     context = {
         'title': title,
         'basket_items': basket_items,
+        'basket': get_basket(request.user),
+
     }
 
     return render(request, 'basketapp/basket.html', context)
@@ -59,11 +62,12 @@ def basket_edit(request, pk, quantity):
         basket_items = Basket.objects.filter(user=request.user). \
             order_by('product__category')
 
-        content = {
+        context = {
             'basket_items': basket_items,
         }
 
-        result = render_to_string('basketapp/includes/inc_basket_list.html', content)
+        result = render_to_string('basketapp/includes/inc_basket_list.html',
+                                  context)
 
         return JsonResponse({'result': result})
 
