@@ -5,12 +5,17 @@ from authapp.forms import ShopUserEditForm
 from django.contrib import auth
 from django.urls import reverse
 
+from mainapp.views import get_basket
+
 
 def login(request):
     title = 'вход'
     heading = 'Вход в систему'
 
-    login_form = ShopUserLoginForm(data=request.POST)
+    login_form = ShopUserLoginForm(data=request.POST or None)
+
+    next = request.GET['next'] if 'next' in request.GET.keys() else ''
+
     if request.method == 'POST' and login_form.is_valid():
         username = request.POST['username']
         password = request.POST['password']
@@ -18,12 +23,16 @@ def login(request):
         user = auth.authenticate(username=username, password=password)
         if user and user.is_active:
             auth.login(request, user)
-            return HttpResponseRedirect(reverse('index'))
+            if 'next' in request.POST.keys():
+                return HttpResponseRedirect(request.POST['next'])
+            else:
+                return HttpResponseRedirect(reverse('index'))
 
     content = {
         'title': title,
         'login_form': login_form,
         'heading': heading,
+        'next': next
     }
     return render(request, 'authapp/login.html', content)
 
@@ -71,7 +80,8 @@ def edit(request):
     content = {
         'title': title,
         'edit_form': edit_form,
-        'heading': heading
+        'heading': heading,
+        'basket': get_basket(request.user),
     }
 
     return render(request, 'authapp/edit.html', content)

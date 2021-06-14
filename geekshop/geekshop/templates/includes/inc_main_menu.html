@@ -2,17 +2,17 @@
     <a href="{% url 'index' %}" class="logo"></a>
     <ul class="menu">
         <li><a href="{% url 'index' %}"
-        {% if request.resolver_match.view_name == 'index' %}
-            class="active"
-        {% endif %}>домой</a></li>
+               class="{% if request.resolver_match.view_name == 'index' %}
+            active
+            {% endif %}">домой</a></li>
         <li><a href="{% url 'products:index' %}"
-        {% if request.resolver_match.namespace == 'products' %}
-            class="active"
-        {% endif %}>продукты</a></li>
+               class="{% if request.resolver_match.namespace == 'products' %}
+            active
+            {% endif %}">продукты</a></li>
         <li><a href="{% url 'contacts' %}"
-        {% if request.resolver_match.view_name == 'contacts' %}
-            class="active"
-        {% endif %}>контакты</a></li>
+               class="{% if request.resolver_match.view_name == 'contacts' %}
+            active
+            {% endif %}">контакты</a></li>
         {% if user.is_authenticated %}
         <li>
             <a href="{% url 'auth:edit' %}">
@@ -30,12 +30,12 @@
 
     </ul>
     <a href="#" class="search"></a>
+    {% if basket %}
     <a href="{% url 'basket:view' %}" class="basket">
         <span>
-        {% if basket %}
             {{ basket.0.total_cost|floatformat:0 }} руб
             ({{ basket.0.total_quantity }} шт.)
-        {% endif %}
         </span>
     </a>
+    {% endif %}
 </div>

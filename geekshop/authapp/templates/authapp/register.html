@@ -1,4 +1,4 @@
-{% extends 'authapp/base.html' %}
+{% extends 'authapp/layout.html' %}
 {% load static %}
 
 
@@ -10,6 +10,6 @@
         {% csrf_token %}
         {{ register_form.as_p }}
         <br>
-        <input class="form-control" type="submit" value="зарегистрироваться">
+        <input class="form-control" type="submit" value="Зарегистрироваться">
     </form>
 {% endblock %}

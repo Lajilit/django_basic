@@ -907,16 +907,16 @@ td:first-child {
 	padding-left: 98px;
 	padding-right: 98px;
 	margin-top: 98px;
-	height: 570px;
+	height: 500px;
 }
 .details-slider {
-	width: 570px;
+	width: 500px;
 	float: left;
 	margin-right: 30px;
 }
 .slider-product {
-	width: 570px;
-	height: 570px;
+	width: 500px;
+	height: 500px;
 }
 .slider-control {
 	width: 420px;
@@ -1130,4 +1130,56 @@ td:first-child {
 .related-products .block {
     display:flex;
     flex-direction:column;
+}
+.basket_list {
+    display: flex;
+    flex-direction: column;
+
+}
+.basket_record {
+    display: flex;
+    width:100%;
+    align-items: center;
+}
+.basket_record img {
+    height: 100px;
+    width: 100px;
+}
+
+/*.basket_record input{
+    width: 50px;
+}*/
+.x {
+    font-size: 30px;
+    text-decoration: none;
+    color: black;
+    height: 30px;
+    width: 30px;
+    border: 2px solid black;
+    text-align: center;
+    line-height: 30px;
+
+}
+.category_name{
+    width: 20%;
+    font-size: 20px;
+}
+.product_name{
+    width: 50%;
+    font-size: 20px;
+}
+.product_price{
+    width: 15%;
+    font-size: 20px;
+}
+.product_quantity {
+    width: 10%;
+    font-size: 20px;
+}
+.product_cost{
+    width: 15%;
+    font-size: 20px;
+}
+.basket_summary {
+    font-size: 20px;
 }
