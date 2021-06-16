@@ -1,25 +1,29 @@
 <!DOCTYPE html>
 {% load static %}
-{{ url }}
 
 <html>
 <head>
     <meta charset="utf-8">
     <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" type="text/css" href="{% static '/style.css' %}">
-    <link rel="stylesheet" href="{% static '/fonts/font-awesome/css/font-awesome.css' %}">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+          integrity="undefined"
+          crossorigin="anonymous">
+    <link rel="stylesheet"
+          type="text/css"
+          href="{% static '/style.css' %}">
+    <link rel="stylesheet"
+          href="{% static '/fonts/font-awesome/css/font-awesome.css' %}">
     {% block css %}
     {% endblock %}
+
 </head>
 <body>
     <div class="container">
         {% block content %}
         {% endblock %}
-
         <div class="clr"></div>
-
     </div>
-
     <div class="footer">
         <div class="clearfix">
             <div class="text-footer">

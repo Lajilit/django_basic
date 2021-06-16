@@ -20,14 +20,17 @@ from django.conf.urls.static import static
 from . import views
 
 urlpatterns = [
-    path('', views.index, name='index'),
     path('admin/', admin.site.urls),
 
+
+    path('admin_panel/', include('adminapp.urls', namespace='admin_panel')),
     path('products/', include('mainapp.urls', namespace='products')),
     path('auth/', include('authapp.urls', namespace='auth')),
-
-    path('contacts/', views.contact, name='contacts'),
     path('basket/', include('basketapp.urls', namespace='basket')),
+
+    path('', views.index, name='index'),
+    path('contacts/', views.contact, name='contacts'),
+
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:

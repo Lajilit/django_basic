@@ -1,7 +1,9 @@
 {% extends 'layout.html' %}
 {% block title %}{{ title|capfirst }}{% endblock %}
-{% block content %}
 {% load static %}
+
+{% block content %}
+
 
 <div class="hero">
     {% include 'includes/inc_main_menu.html' %}
@@ -58,6 +60,4 @@
         </div>
     </div>
 </div>
-
-
 {% endblock %}
