@@ -1,0 +1,85 @@
+{% extends 'adminapp/layout.html' %}
+{% block title %}{{ title|capfirst }}{% endblock %}
+{% load static %}
+
+{% block content %}
+<main>
+    <div class="container-fluid">
+        <h1 class="mt-4">Товары</h1>
+        <div class="card mb-4">
+            <div class="card-header">
+<!--                <i class="fas fa-table mr-1"></i>-->
+<!--                Товары-->
+<!--            </div>-->
+            <div class="card-header">
+                <a href="{# url 'admin_panel:product_create' category.pk #}">
+                    <button class="btn btn-success">Новый товар</button>
+                </a>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable"
+                           width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>Изображение</th>
+                            <th>Название</th>
+                            <th>Цена</th>
+                            <th>Описание</th>
+                            <th>Подробнее</th>
+                            <th>Редактировать</th>
+                            <th>Удалить</th>
+                        </tr>
+                        </thead>
+                        <tfoot>
+                        <tr>
+                            <th>Изображение</th>
+                            <th>Название</th>
+                            <th>Цена</th>
+                            <th>Описание</th>
+                            <th>Подробнее</th>
+                            <th>Редактировать</th>
+                            <th>Удалить</th>
+                        </tr>
+                        </tfoot>
+                        <tbody>
+                        {% for product in objects %}
+                        <tr class="{% if product.is_deleted %}
+                            is_deleted
+                            {% endif %}">
+                            <td>
+                                <img src="/media/{{product.image|default:'products_images/default.jpg'}}"
+                                     alt="{{ product.name }}">
+                            </td>
+                            <td>{{ product.name|title }}</td>
+                            <td>{{ product.price }} руб.</td>
+                            <td>{{ product.short_desc|title }}</td>
+                            <td class="text-center">
+                                <a href="{# url 'admin_panel:product_read' object.pk #}">
+                                    подробнее
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <a href="{# url 'admin_panel:product_read' object.pk #}">
+                                    редактировать
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <a href="{# url 'admin_panel:product_delete' product.pk #}">
+                                    {% if not product.is_deleted %}
+                                    Удалить
+                                    {% else %}
+                                    Удален
+                                    {% endif %}
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

@@ -1,8 +1,8 @@
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.forms import UserChangeForm
-
 from django import forms
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import UserChangeForm
+from django.contrib.auth.forms import UserCreationForm
+from django.forms import BooleanField
 
 from .models import ShopUser
 
@@ -23,16 +23,21 @@ class ShopUserRegisterForm(UserCreationForm):
         model = ShopUser
         fields = ('username',
                   'first_name',
+                  'last_name',
                   'password1',
                   'password2',
                   'email',
                   'age',
-                  'avatar')
+                  'avatar',
+                  'is_active',
+                  'is_staff'
+                  )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control'
+            if not isinstance(field, BooleanField):
+                field.widget.attrs['class'] = 'form-control'
             field.help_text = ''
 
     def clean_age(self):
@@ -49,6 +54,7 @@ class ShopUserEditForm(UserChangeForm):
         fields = (
             'username',
             'first_name',
+            'last_name',
             'email',
             'age',
             'avatar',
@@ -57,7 +63,8 @@ class ShopUserEditForm(UserChangeForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control'
+            if not isinstance(field, BooleanField):
+                field.widget.attrs['class'] = 'form-control'
             field.help_text = ''
             if field_name == 'password':
                 field.widget = forms.HiddenInput()

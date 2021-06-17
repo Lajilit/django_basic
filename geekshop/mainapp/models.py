@@ -14,6 +14,10 @@ class ProductCategory(models.Model):
         verbose_name='описание',
         blank=True,
     )
+    is_deleted = models.BooleanField(
+        default=False,
+        verbose_name='категория удалена'
+    )
 
     def __str__(self):
         return self.name
@@ -55,6 +59,10 @@ class Product(models.Model):
     quantity = models.PositiveIntegerField(
         verbose_name='количество',
         default=0
+    )
+    is_deleted = models.BooleanField(
+        default=False,
+        verbose_name='товар удален'
     )
 
     class Meta():

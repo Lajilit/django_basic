@@ -38,7 +38,9 @@
                         </tfoot>
                         <tbody>
                         {% for user in objects %}
-                            <tr>
+                            <tr class="{% if user.is_deleted %}
+                            is_deleted
+                            {% endif %}">
                                 <td>
                                     <a href="{% url 'admin_panel:user_update' user.id %}"
                                        style="color: dodgerblue">
@@ -64,7 +66,11 @@
                                 </td>
                                 <td class="text-center">
                                     <a href="{% url 'admin_panel:user_delete' user.pk %}">
-                                        X
+                                        {% if not user.is_deleted %}
+                                            Удалить
+                                        {% else %}
+                                            Удален
+                                        {% endif %}
                                     </a>
                                 </td>
                             </tr>

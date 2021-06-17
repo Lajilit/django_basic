@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import user_passes_test
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
@@ -8,11 +9,14 @@ from authapp.models import ShopUser
 from mainapp.models import ProductCategory, Product
 
 
+@user_passes_test(lambda u: u.is_superuser)
 def users(request):
-    users_list = ShopUser.objects.all().order_by('-is_active',
-                                                 '-is_superuser',
-                                                 '-is_staff',
-                                                 'username')
+    users_list = ShopUser.objects.all().order_by(
+        'is_deleted',
+        '-is_active',
+        '-is_superuser',
+        '-is_staff',
+        'username')
 
     context = {
         'title': 'пользователи',
@@ -22,6 +26,7 @@ def users(request):
     return render(request, 'adminapp/users.html', context)
 
 
+@user_passes_test(lambda u: u.is_superuser)
 def user_create(request):
     if request.method == 'POST':
         user_form = ShopUserRegisterForm(request.POST, request.FILES)
@@ -35,9 +40,10 @@ def user_create(request):
         'title': 'создание нового пользователя',
         'update_form': user_form
     }
-    return render(request, 'adminapp/user_create.html', context)
+    return render(request, 'adminapp/user_update.html', context)
 
 
+@user_passes_test(lambda u: u.is_superuser)
 def user_update(request, pk):
     edit_user = get_object_or_404(ShopUser, pk=pk)
     if request.method == 'POST':
@@ -45,7 +51,7 @@ def user_update(request, pk):
                                           instance=edit_user)
         if edit_form.is_valid():
             edit_form.save()
-            return HttpResponseRedirect(reverse('admin:user_update', \
+            return HttpResponseRedirect(reverse('admin_panel:user_update', \
                                                 args=[edit_user.pk]))
     else:
         edit_form = ShopUserAdminEditForm(instance=edit_user)
@@ -57,15 +63,16 @@ def user_update(request, pk):
     return render(request, 'adminapp/user_update.html', context)
 
 
+@user_passes_test(lambda u: u.is_superuser)
 def user_delete(request, pk):
     user = get_object_or_404(ShopUser, pk=pk)
 
     if request.method == 'POST':
         # user.delete()
         # вместо удаления лучше сделаем неактивным
-        user.is_active = False
+        user.is_deleted = True
         user.save()
-        return HttpResponseRedirect(reverse('admin:users'))
+        return HttpResponseRedirect(reverse('admin_panel:users'))
 
     context = {
         'title': 'удаление пользователя',
