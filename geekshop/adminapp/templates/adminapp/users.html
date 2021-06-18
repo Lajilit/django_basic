@@ -65,13 +65,13 @@
                                     {% endif %}
                                 </td>
                                 <td class="text-center">
+                                    {% if not user.is_deleted %}
                                     <a href="{% url 'admin_panel:user_delete' user.pk %}">
-                                        {% if not user.is_deleted %}
-                                            Удалить
-                                        {% else %}
-                                            Удален
-                                        {% endif %}
+                                        Удалить
                                     </a>
+                                    {% else %}
+                                    <p>Удален</p>
+                                    {% endif %}
                                 </td>
                             </tr>
                         {% endfor %}

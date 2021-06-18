@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
-from adminapp.forms import ShopUserAdminEditForm
+from adminapp.forms import ShopUserAdminEditForm, ProductCategoryEditForm
 from authapp.forms import ShopUserRegisterForm
 from authapp.models import ShopUser
 from mainapp.models import ProductCategory, Product
@@ -84,7 +84,9 @@ def user_delete(request, pk):
 def categories(request):
     title = 'админка/категории'
 
-    categories_list = ProductCategory.objects.all()
+    categories_list = ProductCategory.objects.all().order_by(
+        'is_deleted'
+    )
 
     context = {
         'title': title,
@@ -95,15 +97,53 @@ def categories(request):
 
 
 def category_create(request):
-    pass
+    if request.method == 'POST':
+        user_form = ProductCategoryEditForm(request.POST)
+        if user_form.is_valid():
+            user_form.save()
+            return HttpResponseRedirect(reverse('admin_panel:categories'))
+    else:
+        user_form = ProductCategoryEditForm()
+
+    context = {
+        'title': 'создание новой категории товаров',
+        'update_form': user_form
+    }
+    return render(request, 'adminapp/category_update.html', context)
 
 
 def category_update(request, pk):
-    pass
+    edit_category = get_object_or_404(ProductCategory, pk=pk)
+    if request.method == 'POST':
+        edit_form = ProductCategoryEditForm(request.POST, instance=edit_category)
+        if edit_form.is_valid():
+            edit_form.save()
+            return HttpResponseRedirect(reverse('admin_panel:category_update', \
+                                                args=[edit_category.pk]))
+    else:
+        edit_form = ProductCategoryEditForm(instance=edit_category)
+
+    context = {
+        'title': 'редактирование категории товаров',
+        'update_form': edit_form}
+
+    return render(request, 'adminapp/category_update.html', context)
 
 
 def category_delete(request, pk):
-    pass
+    category = get_object_or_404(ProductCategory, pk=pk)
+
+    if request.method == 'POST':
+        # вместо удаления лучше сделаем неактивным
+        category.is_deleted = True
+        category.save()
+        return HttpResponseRedirect(reverse('admin_panel:categories'))
+
+    context = {
+        'title': 'удаление категории',
+        'category_to_delete': category}
+
+    return render(request, 'adminapp/category_delete.html', context)
 
 
 def products(request, pk):

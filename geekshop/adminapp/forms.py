@@ -41,7 +41,10 @@ class ShopUserAdminRegisterForm(ShopUserRegisterForm):
 class ProductCategoryEditForm(forms.ModelForm):
     class Meta:
         model = ProductCategory
-        fields = '__all__'
+        fields = (
+            'name',
+            'description',
+        )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
