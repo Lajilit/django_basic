@@ -1,13 +1,14 @@
 {% extends 'adminapp/layout.html' %}
 {% load static %}
 
-
 {% block content %}
 <div class="w-50 m-auto">
     <div class="card">
         <div class="card-body">
             <h1 class="text-center">{{ title|capfirst }}</h1>
-            <p class="text-center">Уверены, что хотите удалить категорию {{ category_to_delete.name }}?</p>
+            <p class="text-center">
+                Уверены, что хотите удалить категорию {{ cat_to_del.name }}?
+            </p>
         </div>
     </div>
     <form class="form-horizontal" method="post" enctype="multipart/form-data">

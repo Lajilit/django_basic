@@ -8,64 +8,52 @@
         <h1 class="mt-4">Категории товаров</h1>
         <div class="card mb-4">
             <div class="card-header">
-                <!--                <i class="fas fa-table mr-1"></i>-->
-                <!--                Товары-->
-                <!--            </div>-->
-                <div class="card-header">
-                    <a href="{% url 'admin_panel:category_create' %}">
-                        <button class="btn btn-success">Новая категория</button>
-                    </a>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable"
-                               width="100%" cellspacing="0">
-                            <thead>
-                            <tr>
-                                <th>Название</th>
-                                <th>Описание</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <!--                            <tfoot>-->
-                            <!--                            <tr>-->
-                            <!--                                <th>Название</th>-->
-                            <!--                                <th>Описание</th>-->
-                            <!--                                <th></th>-->
-                            <!--                            </tr>-->
-                            <!--                            </tfoot>-->
-                            <tbody>
-                            {% for category in objects %}
-                            <tr class="{% if category.is_deleted %}
+                <a href="{% url 'admin_panel:category_create' %}">
+                    <button class="btn btn-success">Новая категория</button>
+                </a>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable"
+                           width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>Название</th>
+                            <th>Описание</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for category in objects %}
+                        <tr class="{% if category.is_deleted %}
                             is_deleted
                             {% endif %}">
-                                <td class="text-center">
-                                    <a href="{% url 'admin_panel:products' category.pk %}">
-                                        {{ category.name|title }}
-                                    </a>
-                                </td>
-                                <td>{{ category.description }}</td>
-                                <td class="text-center">
-                                    <a href="{% url 'admin_panel:category_update' category.pk %}">
-                                        редактировать
-                                    </a>
-                                    <br>
-                                    {% if not category.is_deleted %}
-                                    <a href="{% url 'admin_panel:category_delete' category.pk %}">
-                                        Удалить
-                                    </a>
-                                    {% else %}
-                                    <p>Удален</p>
-                                    {% endif %}
-
-                                </td>
-                            </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
+                            <td class="text-center">
+                                <a href="{% url 'admin_panel:products' category.pk %}">
+                                    {{ category.name|title }}
+                                </a>
+                            </td>
+                            <td>{{ category.description }}</td>
+                            <td class="text-center">
+                                <a href="{% url 'admin_panel:category_update' category.pk %}">
+                                    редактировать
+                                </a>
+                                <br>
+                                {% if not category.is_deleted %}
+                                <a href="{% url 'admin_panel:category_delete' category.pk %}">
+                                    Удалить
+                                </a>
+                                {% else %}
+                                <p>Удален</p>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
+    </div>
 </main>
 {% endblock %}

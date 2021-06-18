@@ -113,15 +113,15 @@ def category_create(request):
 
 
 def category_update(request, pk):
-    edit_category = get_object_or_404(ProductCategory, pk=pk)
+    edit_cat = get_object_or_404(ProductCategory, pk=pk)
     if request.method == 'POST':
-        edit_form = ProductCategoryEditForm(request.POST, instance=edit_category)
+        edit_form = ProductCategoryEditForm(request.POST, instance=edit_cat)
         if edit_form.is_valid():
             edit_form.save()
             return HttpResponseRedirect(reverse('admin_panel:category_update', \
-                                                args=[edit_category.pk]))
+                                                args=[edit_cat.pk]))
     else:
-        edit_form = ProductCategoryEditForm(instance=edit_category)
+        edit_form = ProductCategoryEditForm(instance=edit_cat)
 
     context = {
         'title': 'редактирование категории товаров',
@@ -141,7 +141,7 @@ def category_delete(request, pk):
 
     context = {
         'title': 'удаление категории',
-        'category_to_delete': category}
+        'cat_to_del': category}
 
     return render(request, 'adminapp/category_delete.html', context)
 

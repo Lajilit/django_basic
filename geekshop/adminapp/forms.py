@@ -52,5 +52,3 @@ class ProductCategoryEditForm(forms.ModelForm):
             if not isinstance(field, BooleanField):
                 field.widget.attrs['class'] = 'form-control'
             field.help_text = ''
-
-
