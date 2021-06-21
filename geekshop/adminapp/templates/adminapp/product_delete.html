@@ -7,13 +7,8 @@
         <div class="card-body">
             <h1 class="text-center">{{ title|capfirst }}</h1>
             <p class="text-center">
-                Уверены, что хотите удалить категорию {{ cat_to_del.name }} {% if products_to_delete %}, а также товары: {% endif %}
+                Уверены, что хотите удалить товар {{ product_to_delete.name }}?
             </p>
-            {% for product in products_to_delete %}
-            <p class="text-center">
-                {{ product.name}}
-            </p>
-            {% endfor %}
         </div>
     </div>
     <form class="form-horizontal" method="post" enctype="multipart/form-data">
@@ -23,8 +18,8 @@
     </form>
 
     <button class="btn btn-round form-control last">
-        <a href="{% url 'admin_panel:categories' %}">
-            к списку категорий
+        <a href="{% url 'admin_panel:products' 0 %}">
+            к списку товаров
         </a>
     </button>
 </div>

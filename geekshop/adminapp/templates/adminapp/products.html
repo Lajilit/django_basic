@@ -5,10 +5,10 @@
 {% block content %}
 <main>
     <div class="container-fluid">
-        <h1 class="mt-4">Товары</h1>
+        <h1 class="mt-4">{{ title|capfirst }}</h1>
         <div class="card mb-4">
             <div class="card-header">
-                <a href="{# url 'admin_panel:product_create' category.pk #}">
+                <a href="{% url 'admin_panel:product_create' category.pk %}">
                     <button class="btn btn-success">Новый товар</button>
                 </a>
             </div>
@@ -18,6 +18,7 @@
                            width="100%" cellspacing="0">
                         <thead>
                         <tr>
+                            <th>Категория</th>
                             <th>Изображение</th>
                             <th>Название</th>
                             <th>Цена</th>
@@ -30,24 +31,29 @@
                         <tr class="{% if product.is_deleted %}
                             is_deleted
                             {% endif %}">
+                            <td class="text-center">
+                                <a href="{% url 'admin_panel:product_read' product.pk %}">
+                                    {{ product.category.name|title }}
+                                </a>
+                            </td>
                             <td>
                                 <img src="/media/{{product.image|default:'products_images/default.jpg'}}"
                                      alt="{{ product.name }}">
                             </td>
                             <td class="text-center">
-                                <a href="{# url 'admin_panel:product_read' product.pk #}">
+                                <a href="{% url 'admin_panel:product_read' product.pk %}">
                                     {{ product.name|title }}
                                 </a>
                             </td>
                             <td>{{ product.price }} руб.</td>
                             <td>{{ product.short_desc|title }}</td>
                             <td class="text-center">
-                                <a href="{# url 'admin_panel:product_update' product.pk #}">
+                                <a href="{% url 'admin_panel:product_update' product.pk %}">
                                     редактировать
                                 </a>
                                 <br>
                                 {% if not product.is_deleted %}
-                                <a href="{# url 'admin_panel:product_delete' product.pk #}">
+                                <a href="{% url 'admin_panel:product_delete' product.pk %}">
                                     Удалить
                                 </a>
                                 {% else %}

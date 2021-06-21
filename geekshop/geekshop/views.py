@@ -7,7 +7,7 @@ def index(request):
 
     data = {
         'title': 'магазин',
-        'products': Product.objects.all()[:4],
+        'products': Product.objects.exclude(is_deleted=True)[:4],
         'basket': get_basket(request.user),
     }
     return render(request, 'index.html', context=data)

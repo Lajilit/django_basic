@@ -3,7 +3,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
-from adminapp.forms import ShopUserAdminEditForm, ProductCategoryEditForm
+from adminapp.forms import ShopUserAdminEditForm, ProductCategoryEditForm, \
+    ProductEditForm
 from authapp.forms import ShopUserRegisterForm
 from authapp.models import ShopUser
 from mainapp.models import ProductCategory, Product
@@ -98,16 +99,16 @@ def categories(request):
 
 def category_create(request):
     if request.method == 'POST':
-        user_form = ProductCategoryEditForm(request.POST)
-        if user_form.is_valid():
-            user_form.save()
+        category_form = ProductCategoryEditForm(request.POST)
+        if category_form.is_valid():
+            category_form.save()
             return HttpResponseRedirect(reverse('admin_panel:categories'))
     else:
-        user_form = ProductCategoryEditForm()
+        category_form = ProductCategoryEditForm()
 
     context = {
         'title': 'создание новой категории товаров',
-        'update_form': user_form
+        'update_form': category_form
     }
     return render(request, 'adminapp/category_update.html', context)
 
@@ -132,26 +133,46 @@ def category_update(request, pk):
 
 def category_delete(request, pk):
     category = get_object_or_404(ProductCategory, pk=pk)
+    products_list = Product.objects.filter(category__pk=pk)
 
     if request.method == 'POST':
         # вместо удаления лучше сделаем неактивным
         category.is_deleted = True
         category.save()
+        for product in products_list:
+            product.is_deleted = True
+            product.save()
         return HttpResponseRedirect(reverse('admin_panel:categories'))
 
     context = {
         'title': 'удаление категории',
-        'cat_to_del': category}
+        'cat_to_del': category,
+        'products_to_delete': products_list,
+    }
+
 
     return render(request, 'adminapp/category_delete.html', context)
 
 
 def products(request, pk):
-    title = 'админка/продукт'
 
-    category = get_object_or_404(ProductCategory, pk=pk)
-    products_list = Product.objects.filter(category__pk=pk).order_by('name')
-
+    if pk == 0:
+        category = {
+            'name': 'все',
+            'pk': pk
+        }
+        products_list = Product.objects.all().order_by(
+            'is_deleted',
+            'name'
+        )
+        title = f'Все товары'
+    else:
+        category = get_object_or_404(ProductCategory, pk=pk)
+        products_list = Product.objects.filter(category__pk=pk).order_by(
+            'is_deleted',
+            'name'
+        )
+        title = f'Товары категории {category.name}'
     context = {
         'title': title,
         'category': category,
@@ -162,16 +183,81 @@ def products(request, pk):
 
 
 def product_create(request, pk):
-    pass
+
+    if pk == 0:
+        product_category = {
+            'name': 'все',
+            'pk': pk
+        }
+    else:
+        product_category = get_object_or_404(ProductCategory, pk=pk)
+
+    if request.method == 'POST':
+        product_form = ProductEditForm(request.POST, request.FILES)
+        if product_form.is_valid():
+            product_form.save()
+            return HttpResponseRedirect(reverse('admin_panel:products',
+                                                args=[pk]))
+    else:
+        if pk > 0:
+            product_form = ProductEditForm(
+                initial={'category': product_category})
+        else:
+            product_form = ProductEditForm()
+
+    context = {
+        'title': 'создание нового товара',
+        'update_form': product_form,
+        'category': product_category,
+    }
+    return render(request, 'adminapp/product_update.html', context)
 
 
 def product_read(request, pk):
-    pass
+    product = get_object_or_404(Product, pk=pk)
+    context = {
+        'title': f'{product.name}',
+        'object': product,
+    }
+
+    return render(request, 'adminapp/product_read.html', context)
 
 
 def product_update(request, pk):
-    pass
+
+    edit_product = get_object_or_404(Product, pk=pk)
+
+    if request.method == 'POST':
+        edit_form = ProductEditForm(request.POST, request.FILES, \
+                                    instance=edit_product)
+        if edit_form.is_valid():
+            edit_form.save()
+            return HttpResponseRedirect(reverse('admin_panel:product_update',
+                                                args=[edit_product.pk]))
+    else:
+        edit_form = ProductEditForm(instance=edit_product)
+
+    context = {'title': 'редактирование товара',
+               'update_form': edit_form,
+               'category': edit_product.category
+               }
+
+    return render(request, 'adminapp/product_update.html', context)
 
 
 def product_delete(request, pk):
-    pass
+
+    product = get_object_or_404(Product, pk=pk)
+
+    if request.method == 'POST':
+        product.is_deleted = True
+        product.save()
+        return HttpResponseRedirect(reverse('admin_panel:products', \
+                                            args=[product.category.pk]))
+
+    context = {
+        'title': 'удаление товара',
+        'product_to_delete': product
+    }
+
+    return render(request, 'adminapp/product_delete.html', context)
