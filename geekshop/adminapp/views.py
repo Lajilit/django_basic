@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse, reverse_lazy
@@ -6,13 +7,12 @@ from django.views.generic.edit import FormMixin, DeleteView
 
 from adminapp.forms import ShopUserAdminEditForm, ProductCategoryEditForm, \
     ProductEditForm, ShopUserAdminRegisterForm
-from authapp.forms import ShopUserRegisterForm
 from authapp.models import ShopUser
 from mainapp.models import ProductCategory, Product
 from django.views.generic import ListView, CreateView, UpdateView
 
 
-class UsersListView(ListView):
+class UsersListView(LoginRequiredMixin, ListView):
     model = ShopUser
     context_object_name = 'objects'
     template_name = 'adminapp/shopuser_list.html'
@@ -35,6 +35,8 @@ class UserCreateView(CreateView):
         context['title'] = 'создание нового пользователя'
 
         return context
+
+# class PasswordChangeForm - изучить, как менять пароль пользователям
 
 
 class UserUpdateView(UpdateView):

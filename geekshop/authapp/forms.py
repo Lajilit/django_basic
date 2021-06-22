@@ -58,7 +58,8 @@ class ShopUserEditForm(UserChangeForm):
             'email',
             'age',
             'avatar',
-            'password')
+            'password',
+        )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

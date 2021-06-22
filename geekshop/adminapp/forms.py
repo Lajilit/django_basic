@@ -18,7 +18,7 @@ class ShopUserAdminEditForm(ShopUserEditForm):
             'avatar',
             'is_active',
             'is_staff',
-            'is_deleted',
+            'is_deleted'
         )
 
 
