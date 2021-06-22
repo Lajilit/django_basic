@@ -27,33 +27,33 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for product in objects %}
-                        <tr class="{% if product.is_deleted %}
+                        {% for object in object_list %}
+                        <tr class="{% if object.is_deleted %}
                             is_deleted
                             {% endif %}">
                             <td class="text-center">
-                                <a href="{% url 'admin_panel:product_read' product.pk %}">
-                                    {{ product.category.name|title }}
+                                <a href="{% url 'admin_panel:products' object.category.pk %}">
+                                    {{ object.category.name|title }}
                                 </a>
                             </td>
                             <td>
-                                <img src="/media/{{product.image|default:'products_images/default.jpg'}}"
-                                     alt="{{ product.name }}">
+                                <img src="/media/{{object.image|default:'products_images/default.jpg'}}"
+                                     alt="{{ object.name }}">
                             </td>
                             <td class="text-center">
-                                <a href="{% url 'admin_panel:product_read' product.pk %}">
-                                    {{ product.name|title }}
+                                <a href="{% url 'admin_panel:product_read' object.pk %}">
+                                    {{ object.name|title }}
                                 </a>
                             </td>
-                            <td>{{ product.price }} руб.</td>
-                            <td>{{ product.short_desc|title }}</td>
+                            <td>{{ object.price }} руб.</td>
+                            <td>{{ object.short_desc|title }}</td>
                             <td class="text-center">
-                                <a href="{% url 'admin_panel:product_update' product.pk %}">
+                                <a href="{% url 'admin_panel:product_update' object.pk %}">
                                     редактировать
                                 </a>
                                 <br>
-                                {% if not product.is_deleted %}
-                                <a href="{% url 'admin_panel:product_delete' product.pk %}">
+                                {% if not object.is_deleted %}
+                                <a href="{% url 'admin_panel:product_delete' object.pk %}">
                                     Удалить
                                 </a>
                                 {% else %}

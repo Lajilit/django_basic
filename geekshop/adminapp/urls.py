@@ -5,13 +5,13 @@ from . import views
 app_name = 'adminapp'
 
 urlpatterns = [
-    path('users/create/', views.user_create,
+    path('users/create/', views.UserCreateView.as_view(),
          name='user_create'),
-    path('users/read/', views.users,
+    path('users/read/', views.UsersListView.as_view(),
          name='users'),
-    path('users/update/<int:pk>/', views.user_update,
+    path('users/update/<int:pk>/', views.UserUpdateView.as_view(),
          name='user_update'),
-    path('users/delete/<int:pk>/', views.user_delete,
+    path('users/delete/<int:pk>/', views.UserDeleteView.as_view(),
          name='user_delete'),
 
     path('categories/create/', views.category_create,
@@ -25,7 +25,7 @@ urlpatterns = [
 
     path('products/create/category/<int:pk>/', views.product_create,
          name='product_create'),
-    path('products/read/category/<int:pk>/', views.products,
+    path('products/read/category/<int:pk>/', views.ProductsListView.as_view(),
          name='products'),
     path('products/read/<int:pk>/', views.product_read,
          name='product_read'),

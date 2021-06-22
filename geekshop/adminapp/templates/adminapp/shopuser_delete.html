@@ -1,4 +1,5 @@
 {% extends 'adminapp/layout.html' %}
+{% block title %}{{ title|capfirst }}{% endblock %}
 {% load static %}
 
 
@@ -8,7 +9,7 @@
         <div class="card-body">
             <h1 class="text-center">{{ title|capfirst }}</h1>
             <p class="text-center">
-                Уверены, что хотите удалить {{ user_to_delete.username }}?
+                Уверены, что хотите удалить пользователя {{ object.username }}?
             </p>
         </div>
     </div>

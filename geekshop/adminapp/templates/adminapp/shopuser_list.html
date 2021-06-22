@@ -38,36 +38,36 @@
                         </tr>
                         </tfoot>
                         <tbody>
-                        {% for user in objects %}
-                        <tr class="{% if user.is_deleted %}
+                        {% for object in objects %}
+                        <tr class="{% if object.is_deleted %}
                             is_deleted
                             {% endif %}">
                             <td>
-                                <a href="{% url 'admin_panel:user_update' user.id %}"
+                                <a href="{% url 'admin_panel:user_update' object.id %}"
                                    style="color: dodgerblue">
-                                    {{ user.username }}
+                                    {{ object.username }}
                                 </a>
                             </td>
-                            <td>{{ user.first_name }}</td>
-                            <td>{{ user.last_name }}</td>
-                            <td>{{ user.email }}</td>
+                            <td>{{ object.first_name }}</td>
+                            <td>{{ object.last_name }}</td>
+                            <td>{{ object.email }}</td>
                             <td class="text-center">
-                                {% if user.is_staff %}
+                                {% if object.is_staff %}
                                 <i class="fa fa-check-circle"></i>
                                 {% else %}
                                 <i class="fa fa-times-circle"></i>
                                 {% endif %}
                             </td>
                             <td class="text-center">
-                                {% if user.is_active %}
+                                {% if object.is_active %}
                                 <i class="fa fa-check-circle"></i>
                                 {% else %}
                                 <i class="fa fa-times-circle"></i>
                                 {% endif %}
                             </td>
                             <td class="text-center">
-                                {% if not user.is_deleted %}
-                                <a href="{% url 'admin_panel:user_delete' user.pk %}">
+                                {% if not object.is_deleted %}
+                                <a href="{% url 'admin_panel:user_delete' object.pk %}">
                                     Удалить
                                 </a>
                                 {% else %}
