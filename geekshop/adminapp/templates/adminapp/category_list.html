@@ -5,7 +5,7 @@
 {% block content %}
 <main>
     <div class="container-fluid">
-        <h1 class="mt-4">Категории товаров</h1>
+        <h1 class="mt-4">{{ title|capfirst }}</h1>
         <div class="card mb-4">
             <div class="card-header">
                 <a href="{% url 'admin_panel:category_create' %}">
@@ -24,23 +24,23 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for category in objects %}
-                        <tr class="{% if category.is_deleted %}
+                        {% for object in objects %}
+                        <tr class="{% if object.is_deleted %}
                             is_deleted
                             {% endif %}">
                             <td class="text-center">
-                                <a href="{% url 'admin_panel:products' category.pk %}">
-                                    {{ category.name|title }}
+                                <a href="{% url 'admin_panel:products' object.pk %}">
+                                    {{ object.name|title }}
                                 </a>
                             </td>
-                            <td>{{ category.description }}</td>
+                            <td>{{ object.description }}</td>
                             <td class="text-center">
-                                <a href="{% url 'admin_panel:category_update' category.pk %}">
+                                <a href="{% url 'admin_panel:category_update' object.pk %}">
                                     редактировать
                                 </a>
                                 <br>
-                                {% if not category.is_deleted %}
-                                <a href="{% url 'admin_panel:category_delete' category.pk %}">
+                                {% if not object.is_deleted %}
+                                <a href="{% url 'admin_panel:category_delete' object.pk %}">
                                     Удалить
                                 </a>
                                 {% else %}

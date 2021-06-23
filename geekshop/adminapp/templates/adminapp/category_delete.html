@@ -7,9 +7,11 @@
         <div class="card-body">
             <h1 class="text-center">{{ title|capfirst }}</h1>
             <p class="text-center">
-                Уверены, что хотите удалить категорию {{ cat_to_del.name }} {% if products_to_delete %}, а также товары: {% endif %}
+                Уверены, что хотите удалить категорию {{ object }} {% if prod_to_del %}, а также товары: {% endif %}
+
+                {{ objects }}
             </p>
-            {% for product in products_to_delete %}
+            {% for product in prod_to_del %}
             <p class="text-center">
                 {{ product.name}}
             </p>
